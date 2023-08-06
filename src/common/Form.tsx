@@ -1,38 +1,68 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 
 import { Viaje } from "../models/viajes/viaje";
-import { useRouter } from "next/navigation";
 
 export default function Form() {
 	const router = useRouter();
+	const params = useParams();
 	const [newTravel, setNewTravel] = useState<Viaje>({
 		destino: "",
 		ubicacion: "",
 	});
 
+	const getTravel = async () => {
+		const res = await fetch(`/api/viajes/${params.id}`);
+		const data = await res.json();
+		setNewTravel({ destino: data.destino, ubicacion: data.ubicacion });
+	};
+
+	useEffect(() => {
+		if (params.id) {
+			getTravel();
+		}
+	}, []);
+
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-		try {
-			const res = await fetch("/api/viajes", {
-				method: "POST",
-				body: JSON.stringify(newTravel),
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			if (res.status === 200) {
-				router.push("/");
+		if (!params.id) {
+			try {
+				const res = await fetch("/api/viajes", {
+					method: "POST",
+					body: JSON.stringify(newTravel),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				if (res.status === 200) {
+					router.push("/");
+				}
+			} catch (error) {
+				console.log(error);
 			}
-		} catch (error) {
-			console.log(error);
+		} else {
+			try {
+				await fetch(`/api/viajes/${params.id}`, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(newTravel),
+				});
+				router.push("/");
+				router.refresh();
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	};
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setNewTravel({ ...newTravel, [e.target.name]: e.target.value });
 	};
+
 	return (
 		<div className='w-full max-w-xs'>
 			<form
@@ -65,7 +95,9 @@ export default function Form() {
 					/>
 				</div>
 
-				<button className='text-white bg-black p-4 rounded-full'>crear</button>
+				<button className='text-white bg-black p-4 rounded-full' type='submit'>
+					crear
+				</button>
 			</form>
 			<p className='text-center text-gray-500 text-xs'>
 				&copy;2020 Acme Corp. All rights reserved.

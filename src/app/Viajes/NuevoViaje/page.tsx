@@ -1,3 +1,9 @@
+import Form from "@/src/common/Form";
+
 export default function NewTravel() {
-	return <div>create travel bro</div>;
+	return (
+		<div>
+			<Form />
+		</div>
+	);
 }

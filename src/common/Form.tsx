@@ -38,6 +38,8 @@ export default function Form() {
 				});
 				if (res.status === 200) {
 					router.push("/");
+				router.refresh();
+
 				}
 			} catch (error) {
 				console.log(error);

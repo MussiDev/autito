@@ -5,7 +5,7 @@ export default function Navbar() {
 	return (
 		<header className='m-auto w-full max-w-screen-lg p-4 flex justify-between'>
 			<h2 className='text-2xl font-medium'>Autito🚗</h2>
-			<Link className='bg-blue-500 p-2 rounded-full' href='/travels/newTravel'>
+			<Link className='bg-blue-500 p-2 rounded-full' href='/Viajes/NuevoViaje'>
 				Crear viaje
 			</Link>
 		</header>

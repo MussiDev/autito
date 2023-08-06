@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server"
+import Viajes from "@/src/models/api/viajes/Viajes"
 import { connectionDB } from "@/src/utils/connection/mongoose"
 
-export const GET = () => {
+export const GET = async() => {
     connectionDB()
-    return NextResponse.json({
-        message: 'getting travels..'
-    })
+
+    const viajes = await Viajes.find()
+
+    return NextResponse.json(viajes)
 }
 
 export const POST = () => {

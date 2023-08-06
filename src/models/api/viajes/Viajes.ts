@@ -43,4 +43,4 @@ const ViajeSchema = new Schema({
         timestamps: true
     })
 
-export const Viaje = models.Viaje || model('Viaje', ViajeSchema);
+export const Viajes = models.Viaje || model('Viaje', ViajeSchema);

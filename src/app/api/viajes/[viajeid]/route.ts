@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 
 import { RouteParams } from "@/src/models/api/viajes/RouteParams"
-import { Viaje } from "@/src/models/api/viajes/Viajes"
+import { Viajes } from "@/src/models/api/viajes/Viajes"
 import { connectionDB } from "@/src/utils/connection/mongoose"
 
 export const GET = async (request: NextRequest,  { params }: { params: RouteParams }) => {
     try {
         connectionDB()
-    const travelFound = await Viaje.findById({
+    const travelFound = await Viajes.findById({
         _id: params.viajeid
     })
 
@@ -29,7 +29,7 @@ export const GET = async (request: NextRequest,  { params }: { params: RoutePara
 
 export const DELETE = async (request: NextRequest,  { params }: { params: RouteParams }) => {
     try {
-        const travelDeleted = await Viaje.findByIdAndDelete(params.viajeid)
+        const travelDeleted = await Viajes.findByIdAndDelete(params.viajeid)
 
         if(!travelDeleted){
             return NextResponse.json({
@@ -51,7 +51,7 @@ export const PUT = async (request: NextRequest,  { params }: { params: RoutePara
     try {
         const data= await request.json()
 
-        const travelUpdated = await Viaje.findByIdAndUpdate(params.viajeid, data, {
+        const travelUpdated = await Viajes.findByIdAndUpdate(params.viajeid, data, {
         new: true
         })
         return NextResponse.json(travelUpdated)

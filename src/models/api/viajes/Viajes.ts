@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
-const viajeSchema = new Schema({
+const ViajeSchema = new Schema({
     destino: {
         type: String,
         required: true,
@@ -43,4 +43,4 @@ const viajeSchema = new Schema({
         timestamps: true
     })
 
-export default models.Viajes || model('Viaje', viajeSchema)
+export const Viaje = models.Viaje || model('Viaje', ViajeSchema);

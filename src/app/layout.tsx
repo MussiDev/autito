@@ -1,8 +1,8 @@
 import "./globals.css";
 
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/src/components/Footer/Footer";
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/src/components/Navbar/Navbar";
 
 export const metadata: Metadata = {
 	title: "Autito 🚗",

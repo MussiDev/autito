@@ -1,12 +1,11 @@
 import "./globals.css";
 
-import { Inter } from "next/font/google";
+import Footer from "@/components/Footer/Footer";
 import type { Metadata } from "next";
-
-const inter = Inter({ subsets: ["latin"] });
+import Navbar from "@/components/Navbar/Navbar";
 
 export const metadata: Metadata = {
-	title: "Favinterest",
+	title: "Autito 🚗",
 	description: "Web App about post images",
 };
 
@@ -18,15 +17,11 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className='grid min-h-screen grid-rows-[60px,1fr,60px] gap-4'>
-				<header className='m-auto w-full max-w-screen-lg p-4'>
-					<h2 className='text-2xl font-medium'>Favinterest</h2>
-				</header>
+				<Navbar />
 				<main className='m-auto flex h-full  w-full max-w-screen-lg flex-col items-center justify-between px-4'>
 					{children}
 				</main>
-				<footer className='m-auto w-full max-w-screen-lg p-4 text-center'>
-					Created by Joaquin Mussi
-				</footer>
+				<Footer />
 			</body>
 		</html>
 	);

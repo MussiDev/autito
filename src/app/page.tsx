@@ -1,7 +1,7 @@
 import TravelCard from "../components/Travels/TravelCard";
-import { Viaje } from "../models/viajes/viaje";
-import { Viajes } from "@/src/models/api/viajes/Viajes";
-import { connectionDB } from "@/src/utils/connection/mongoose";
+import { Viaje } from "../../entities/Travels/Viaje";
+import { Viajes } from "@/src/models/Viajes";
+import { connectionDB } from "@/src/utils/mongoose";
 
 const loadTravels = async () => {
 	connectionDB();
@@ -11,10 +11,15 @@ const loadTravels = async () => {
 
 export default async function Home() {
 	const travels: Viaje[] = await loadTravels();
+	const plainTravels = travels.map((travel) => ({
+		id: travel.id,
+		destino: travel.destino,
+		ubicacion: travel.ubicacion,
+	}));
 	return (
 		<article className='grid grid-cols-3 gap-2'>
-			{travels.map((travel: Viaje) => (
-				<TravelCard travel={travel} />
+			{plainTravels.map((travel: Viaje) => (
+				<TravelCard key={travel.id} travel={travel} />
 			))}
 		</article>
 	);

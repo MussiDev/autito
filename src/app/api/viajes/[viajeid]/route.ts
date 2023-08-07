@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { RouteParams } from "@/src/models/api/viajes/RouteParams"
-import { Viajes } from "@/src/models/api/viajes/Viajes"
-import { connectionDB } from "@/src/utils/connection/mongoose"
+import { RouteParams } from "@/entities/RouteParams"
+import { Viajes } from "@/src/models/Viajes"
+import { connectionDB } from "@/src/utils/mongoose"
 
 export const GET = async (request: NextRequest,  { params }: { params: RouteParams }) => {
     try {
         connectionDB()
-    const travelFound = await Viajes.findById({
-        _id: params.viajeid
-    })
+        const travelFound = await Viajes.findById({
+            _id: params.viajeid
+        })
 
     if(!travelFound){
         return NextResponse.json({

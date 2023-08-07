@@ -3,12 +3,13 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-import { Viaje } from "../models/viajes/viaje";
+import { Viaje } from "../../entities/Travels/Viaje";
 
 export default function Form() {
 	const router = useRouter();
 	const params = useParams();
 	const [newTravel, setNewTravel] = useState<Viaje>({
+		id: null,
 		destino: "",
 		ubicacion: "",
 	});
@@ -16,7 +17,11 @@ export default function Form() {
 	const getTravel = async () => {
 		const res = await fetch(`/api/viajes/${params.id}`);
 		const data = await res.json();
-		setNewTravel({ destino: data.destino, ubicacion: data.ubicacion });
+		setNewTravel({
+			id: null,
+			destino: data.destino,
+			ubicacion: data.ubicacion,
+		});
 	};
 
 	useEffect(() => {
@@ -38,8 +43,7 @@ export default function Form() {
 				});
 				if (res.status === 200) {
 					router.push("/");
-				router.refresh();
-
+					router.refresh();
 				}
 			} catch (error) {
 				console.log(error);

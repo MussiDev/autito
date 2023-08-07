@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { Viajes } from "@/src/models/api/viajes/Viajes"
-import { connectionDB } from "@/src/utils/connection/mongoose"
+import { Viajes } from "@/src/models/Viajes"
+import { connectionDB } from "@/src/utils/mongoose"
 
 export const GET = async () => {
     connectionDB()

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
-import { Viaje } from "@/src/models/viajes/viaje";
+import { Viaje } from "@/entities/Travels/Viaje";
 import { useRouter } from "next/navigation";
 
 interface TravelCardProps {
@@ -11,23 +11,33 @@ interface TravelCardProps {
 
 export default function TravelCard({ travel }: TravelCardProps) {
 	const router = useRouter();
+
 	const handleDelete = async () => {
-		await fetch(`api/viajes/${travel._id}`, {
-			method: "DELETE",
-		});
-		router.refresh();
+		try {
+			const response = await fetch(`api/viajes/${travel.id}`, {
+				method: "DELETE",
+			});
+
+			if (response.ok) {
+				router.refresh();
+			} else {
+				console.error("Error al eliminar el viaje");
+			}
+		} catch (error) {
+			console.error("Error al eliminar el viaje:", error);
+		}
 	};
 	return (
-		<>
-			<Link href={`/Viajes/${travel._id}`}>
-				<div key={travel._id} className='bg-white p-10 text-black rounded-md'>
+		<div className='flex flex-col'>
+			<Link href={`/Viajes/${travel.id}`} legacyBehavior>
+				<a className='bg-white p-10 text-black rounded-md'>
 					<h3>{travel.destino}</h3>
 					<p>{travel.ubicacion}</p>
-				</div>
+				</a>
 			</Link>
-			<button onClick={handleDelete} type='button'>
-				borrar
+			<button onClick={handleDelete} type='button' className='bg-blue-500'>
+				Borrar
 			</button>
-		</>
+		</div>
 	);
 }

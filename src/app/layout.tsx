@@ -4,6 +4,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import Footer from "@/src/components/Footer/Footer";
 import type { Metadata } from "next";
 import Navbar from "@/src/components/Navbar/Navbar";
+import React from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 
 config.autoAddCss = false; 

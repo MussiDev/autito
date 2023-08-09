@@ -22,14 +22,14 @@ export default function Navbar() {
 				<LinkElement data={{ icon: faMoon, href: "" }} />
 				<LinkElement data={{ icon: faBell, href: "" }} />
 				<section className='flex gap-2 items-center'>
-					<div className='w-6 h-6 relative cursor-pointer '>
+					<div className='w-6 h-6 relative cursor-pointer'>
 						<Image
-							src='/img/test.jpg'
+							src='/img/test2.jpg'
 							alt='user'
 							fill={true}
 							loading='lazy'
-							className='rounded-full object-cover'
-							quality={100}
+							className='rounded-full object-cover object-top'
+							quality={80}
 							sizes='100vw'
 						/>
 					</div>

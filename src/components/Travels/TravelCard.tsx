@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/src/common/Button/Button";
 import Link from "next/link";
 import React from "react";
 import { Viaje } from "@/entities/Travels/Viaje";
@@ -28,16 +29,17 @@ export default function TravelCard({ travel }: TravelCardProps) {
 		}
 	};
 	return (
-		<div className='flex flex-col'>
+		<section className='flex flex-col gap-2'>
 			<Link href={`/Viajes/${travel.id}`} legacyBehavior>
 				<a className='bg-white p-10 text-black rounded-md'>
 					<h3>{travel.destino}</h3>
 					<p>{travel.ubicacion}</p>
 				</a>
 			</Link>
-			<button onClick={handleDelete} type='button' className='bg-blue-500'>
-				Borrar
-			</button>
-		</div>
+			<Button
+				data={{ text: "Borrar" }}
+				events={{ handleClick: handleDelete }}
+			/>
+		</section>
 	);
 }

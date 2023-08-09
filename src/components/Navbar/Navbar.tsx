@@ -1,7 +1,7 @@
 import {
 	faBell,
 	faChevronDown,
-	faMoon,
+	faMessage,
 	faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -19,7 +19,7 @@ export default function Navbar() {
 				data={{ text: "Crear Viaje", href: "/Viajes/NuevoViaje", icon: faPlus }}
 			/>
 			<div className='flex gap-4'>
-				<LinkElement data={{ icon: faMoon, href: "" }} />
+				<LinkElement data={{ icon: faMessage, href: "" }} />
 				<LinkElement data={{ icon: faBell, href: "" }} />
 				<section className='flex gap-2 items-center'>
 					<div className='w-6 h-6 relative cursor-pointer'>

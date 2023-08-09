@@ -7,16 +7,23 @@ interface LinkProps {
 	data: {
 		icon: IconProp;
 		href: string;
+		legacyBehavior?: boolean;
 	};
 }
 
 export default function LinkElement(props: LinkProps) {
-	const { href, icon } = props.data;
+	const { href, icon, legacyBehavior } = props.data;
 	return (
 		<>
-			<Link href={href}>
-				<FontAwesomeIcon icon={icon} />
-			</Link>
+			{legacyBehavior ? (
+				<Link href={href} legacyBehavior>
+					<FontAwesomeIcon icon={icon} />
+				</Link>
+			) : (
+				<Link href={href}>
+					<FontAwesomeIcon icon={icon} />
+				</Link>
+			)}
 		</>
 	);
 }

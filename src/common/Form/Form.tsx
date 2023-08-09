@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { useParams, useRouter } from "next/navigation";
 
-import { Viaje } from "../../entities/Travels/Viaje";
+import { Viaje } from "../../../entities/Travels/Viaje";
 
 export default function Form() {
 	const router = useRouter();

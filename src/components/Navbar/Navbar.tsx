@@ -1,36 +1,41 @@
-import { faBell, faMoon, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+	faBell,
+	faChevronDown,
+	faMoon,
+	faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
+import Button from "@/src/common/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import Link from "next/link";
+import LinkElement from "@/src/common/LinkElement/LinkElement";
 import React from "react";
 
 export default function Navbar() {
 	return (
 		<header className='m-auto w-full max-w-screen-lg p-4 flex justify-between items-center'>
 			<h2 className='text-2xl font-medium'>Autito🚗</h2>
-			<Link
-				className='p-2 rounded-md text-white font-medium bg-third flex gap-2 items-center'
-				href='/Viajes/NuevoViaje'>
-				<FontAwesomeIcon icon={faPlus} />
-				Crear viaje
-			</Link>
+			<Button
+				data={{ text: "Crear Viaje", href: "/Viajes/NuevoViaje", icon: faPlus }}
+			/>
 			<div className='flex gap-4'>
-				<Link href=''>
-					<FontAwesomeIcon icon={faMoon} />
-				</Link>
-				<Link href=''>
-					<FontAwesomeIcon icon={faBell} />
-				</Link>
-				<div className='w-6 h-6 relative cursor-pointer'>
-					<Image
-						src='/img/test.jpg'
-						alt='user'
-						layout='fill'
-						objectFit='cover'
-						className='rounded-full'
-					/>
-				</div>
+				<LinkElement data={{ icon: faMoon, href: "" }} />
+				<LinkElement data={{ icon: faBell, href: "" }} />
+				<section className='flex gap-2 items-center'>
+					<div className='w-6 h-6 relative cursor-pointer '>
+						<Image
+							src='/img/test.jpg'
+							alt='user'
+							fill={true}
+							loading='lazy'
+							className='rounded-full object-cover'
+							quality={100}
+							sizes='100vw'
+						/>
+					</div>
+
+					<FontAwesomeIcon icon={faChevronDown} className='text-sm' />
+				</section>
 			</div>
 		</header>
 	);

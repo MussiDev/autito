@@ -1,4 +1,4 @@
-import Form from "@/src/common/Form";
+import Form from "@/src/common/Form/Form";
 
 export default function NewTravel() {
 	return (

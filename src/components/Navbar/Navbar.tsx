@@ -33,8 +33,7 @@ export default function Navbar() {
 							sizes='100vw'
 						/>
 					</div>
-
-					<FontAwesomeIcon icon={faChevronDown} className='text-sm' />
+					<FontAwesomeIcon icon={faChevronDown} className='text-sm cursor-pointer' />
 				</section>
 			</div>
 		</header>

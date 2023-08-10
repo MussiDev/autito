@@ -57,7 +57,7 @@ export default function Form() {
 								"Content-Type": "application/json",
 							},
 					  }));
-
+					  
 				if (response.ok) {
 					router.push("/");
 					router.refresh();

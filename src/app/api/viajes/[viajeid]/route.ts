@@ -6,7 +6,7 @@ import { connectionDB } from "@/src/utils/mongoose"
 
 export const GET = async (request: NextRequest,  { params }: { params: RouteParams }) => {
     try {
-        connectionDB()
+        await connectionDB()
         const travelFound = await Viajes.findById({
             _id: params.viajeid
         })
@@ -28,6 +28,7 @@ export const GET = async (request: NextRequest,  { params }: { params: RoutePara
 }
 
 export const DELETE = async (request: NextRequest,  { params }: { params: RouteParams }) => {
+    await connectionDB()
     try {
         const travelDeleted = await Viajes.findByIdAndDelete(params.viajeid)
 
@@ -48,6 +49,7 @@ export const DELETE = async (request: NextRequest,  { params }: { params: RouteP
 }
 
 export const PUT = async (request: NextRequest,  { params }: { params: RouteParams }) => {
+    await connectionDB()
     try {
         const data= await request.json()
 

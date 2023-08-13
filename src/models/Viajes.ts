@@ -1,20 +1,34 @@
 import { Schema, model, models } from "mongoose";
 
-const ViajeSchema = new Schema({
+const ViajeSchema = new Schema(
+    {
     destino: {
         type: String,
         required: true,
-        unique: true,
-        trim: true
     },
     ubicacion: {
         type: String,
         required: true,
-        unique: true,
-        trim: true
     },
+    fecha: {
+        type: Date,
+        required: true
+    },
+    hora: {
+        type: TimeRanges,
+        required: true
+    },
+    lugares: {
+        type: Number,
+        required: true
+    },
+    descripcion: {
+        type: String,
+        required: false
+    }
     },{
         timestamps: true
-    })
+    }
+)
 
 export const Viajes = models.Viaje || model('Viaje', ViajeSchema);

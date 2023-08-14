@@ -1,5 +1,8 @@
 export interface Viaje {
-    id: number | null
     destino: string
     ubicacion: string
+    fecha: string
+    hora: string
+    lugares: number
+    descripcion: string
 }

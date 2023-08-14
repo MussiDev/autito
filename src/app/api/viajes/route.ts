@@ -6,19 +6,19 @@ import { connectionDB } from "@/src/utils/mongoose"
 export const GET = async () => {
     await connectionDB()
     const viajes = await Viajes.find()
-    return NextResponse.json(viajes)
+    return NextResponse.json({viajes})
 }
 
 export const POST = async (request: NextRequest) => {
-    await connectionDB()
-    try{
-        const data = await request.json()
-        const newTravel = new Viajes(data)
-        const saveTravel = await newTravel.save()
-        return NextResponse.json(saveTravel)
-    } catch (error){
-        return NextResponse.json(error, {
-            status: 400
-        })
-    }
+    const { destino, ubicacion, fecha, hora, lugares, descripcion } = await request.json();
+    await connectionDB();
+    await Viajes.create({ destino, ubicacion, fecha, hora, lugares, descripcion });
+    return NextResponse.json({ message: "Travel Created" }, { status: 201 });
+}
+
+export const DELETE = async (request: NextRequest) => {
+    const id = request.nextUrl.searchParams.get("id");
+    await connectionDB();
+    await Viajes.findByIdAndDelete(id);
+    return NextResponse.json({ message: "Travel deleted" }, { status: 200 });
 }

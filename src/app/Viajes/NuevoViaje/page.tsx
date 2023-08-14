@@ -4,7 +4,7 @@ import { Suspense } from "react";
 export default function NewTravel() {
     return (
         <Suspense fallback={<p>Loading...</p>}>
-            <Form />
+            <Form type="create" />
         </Suspense>
     );
 }

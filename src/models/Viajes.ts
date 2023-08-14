@@ -11,11 +11,11 @@ const ViajeSchema = new Schema(
         required: true,
     },
     fecha: {
-        type: Date,
+        type: String,
         required: true
     },
     hora: {
-        type: TimeRanges,
+        type: String,
         required: true
     },
     lugares: {

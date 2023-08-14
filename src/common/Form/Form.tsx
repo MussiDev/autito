@@ -1,58 +1,57 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
+import Button from "../Button/Button";
 import { Viaje } from "../../../entities/Travels/Viaje";
+import { useRouter } from "next/navigation";
 
-export default function Form() {
+interface FormProps {
+    type: string;
+    id?: string;
+}
+
+export default function Form(props: FormProps) {
+    const { type, id } = props;
     const router = useRouter();
-    const params = useParams();
     const [newTravel, setNewTravel] = useState<Viaje>({
-        id: null,
         destino: "",
         ubicacion: "",
+        fecha: "",
+        hora: "",
+        lugares: 4,
+        descripcion: "",
     });
-
-    const getTravel = useCallback(async () => {
-        const res = await fetch(`/api/viajes/${params.id}`);
-        if (res.ok) {
-            const data = await res.json();
-            setNewTravel({
-                id: null,
-                destino: data.destino,
-                ubicacion: data.ubicacion,
-            });
-        }
-    }, [params.id]);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        if (!params.id) {
-            try {
-                const response = await (params.id
-                    ? fetch(`/api/viajes/${params.id}`, {
-                          method: "PUT",
-                          headers: {
-                              "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify(newTravel),
-                      })
-                    : fetch("/api/viajes", {
+        const { destino, ubicacion, fecha, hora, lugares, descripcion } = newTravel;
+        if (!destino || !ubicacion || !fecha || !hora || !lugares || !descripcion) return;
+
+        try {
+            const response =
+                type === "create"
+                    ? await fetch("/api/viajes", {
                           method: "POST",
                           body: JSON.stringify(newTravel),
                           headers: {
                               "Content-Type": "application/json",
                           },
-                      }));
+                      })
+                    : await fetch(`/api/viajes/${id}`, {
+                          method: "PUT",
+                          headers: {
+                              "Content-type": "application/json",
+                          },
+                          body: JSON.stringify(newTravel),
+                      });
 
-                if (response.ok) {
-                    router.push("/");
-                    router.refresh();
-                }
-            } catch (error) {
-                console.log(error);
+            if (response.ok) {
+                router.push("/");
+                router.refresh();
             }
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -62,12 +61,6 @@ export default function Form() {
             [e.target.name]: e.target.value,
         }));
     };
-
-    useEffect(() => {
-        if (params.id) {
-            getTravel();
-        }
-    }, [params.id, getTravel]);
 
     return (
         <div className="w-full max-w-xs">
@@ -100,10 +93,64 @@ export default function Form() {
                         value={newTravel.ubicacion}
                     />
                 </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold mb-2" htmlFor="fecha">
+                        Fecha
+                    </label>
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        id="fecha"
+                        name="fecha"
+                        type="Date"
+                        placeholder="Fecha"
+                        onChange={handleChange}
+                        value={newTravel.fecha}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold mb-2" htmlFor="hora">
+                        Hora
+                    </label>
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        id="hora"
+                        name="hora"
+                        type="Time"
+                        placeholder="Hora"
+                        onChange={handleChange}
+                        value={newTravel.hora}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold mb-2" htmlFor="lugares">
+                        Lugares
+                    </label>
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        id="lugares"
+                        name="lugares"
+                        type="text"
+                        placeholder="Lugares"
+                        onChange={handleChange}
+                        value={newTravel.lugares}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold mb-2" htmlFor="descripcion">
+                        Descripción
+                    </label>
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        id="descripcion"
+                        name="descripcion"
+                        type="text"
+                        placeholder="Descripción"
+                        onChange={handleChange}
+                        value={newTravel.descripcion}
+                    />
+                </div>
 
-                <button className="text-white bg-black p-4 rounded-full" type="submit">
-                    {params.id ? "Actualizar" : "Crear"}
-                </button>
+                <Button data={{ text: "Crear" }} />
             </form>
             <p className="text-center text-gray-500 text-xs">&copy;2020 Acme Corp. All rights reserved.</p>
         </div>

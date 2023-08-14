@@ -5,62 +5,16 @@ import { Viajes } from "@/src/models/Viajes"
 import { connectionDB } from "@/src/utils/mongoose"
 
 export const GET = async (request: NextRequest,  { params }: { params: RouteParams }) => {
-    try {
-        await connectionDB()
-        const travelFound = await Viajes.findById({
-            _id: params.viajeid
-        })
-
-    if(!travelFound){
-        return NextResponse.json({
-            message: 'Travel not found'
-        }, {
-            status: 404
-        })
-    }
-    
-    return NextResponse.json(travelFound)
-    } catch (error) {
-        return NextResponse.json(error, {
-            status: 400
-        })
-    }
-}
-
-export const DELETE = async (request: NextRequest,  { params }: { params: RouteParams }) => {
-    await connectionDB()
-    try {
-        const travelDeleted = await Viajes.findByIdAndDelete(params.viajeid)
-
-        if(!travelDeleted){
-            return NextResponse.json({
-                message: 'Travel not found'
-            }, {
-                status: 404
-            })
-        }
-
-        return NextResponse.json(travelDeleted)
-    } catch (error) {
-        return NextResponse.json(error, {
-            status: 400
-        })
-    }
+    const { id } = params;
+    await connectionDB();
+    const travel = await Viajes.findOne({ _id: id });
+    return NextResponse.json({ travel }, { status: 200 });
 }
 
 export const PUT = async (request: NextRequest,  { params }: { params: RouteParams }) => {
-    await connectionDB()
-    try {
-        const data= await request.json()
-
-        const travelUpdated = await Viajes.findByIdAndUpdate(params.viajeid, data, {
-        new: true
-        })
-        return NextResponse.json(travelUpdated)
-        
-    } catch (error) {
-        return NextResponse.json(error, {
-            status: 400
-        })
-    }
+    const { id } = params;
+    const {newDestino: destino, newUbicacion: ubicacion, newFecha: fecha, newHora: hora, newLugares: lugares, newDescripcion: descripcion} = await request.json();
+    await connectionDB();
+    await Viajes.findByIdAndUpdate(id, { destino, ubicacion, fecha, hora, lugares, descripcion });
+    return NextResponse.json({ message: "Travel updated" }, { status: 200 });
 }

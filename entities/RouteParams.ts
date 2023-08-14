@@ -1,3 +1,3 @@
 export interface RouteParams {
-    viajeid: string;
+    id: string;
 }

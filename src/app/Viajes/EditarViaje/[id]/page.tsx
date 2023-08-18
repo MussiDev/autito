@@ -16,9 +16,9 @@ const getTravelById = async (id: string) => {
     }
 };
 
-export default async function EditarViaje({ params }: { params: RouteParams }) {
+export default async function editarViaje({ params }: { params: RouteParams }) {
     const { id } = params;
     await getTravelById(id);
 
-    return <Form type="create" id={id} />;
+    return <Form type="edit" id={id} />;
 }

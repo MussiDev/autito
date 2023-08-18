@@ -26,7 +26,7 @@ export default function Form(props: FormProps) {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         const { destino, ubicacion, fecha, hora, lugares, descripcion } = newTravel;
-        if (!destino || !ubicacion || !fecha || !hora || !lugares || !descripcion) return;
+        if (!destino || !ubicacion || !fecha || !hora || !lugares) return;
 
         try {
             const response =
@@ -45,7 +45,7 @@ export default function Form(props: FormProps) {
                           },
                           body: JSON.stringify(newTravel),
                       });
-
+            console.log(response);
             if (response.ok) {
                 router.push("/");
                 router.refresh();
@@ -150,7 +150,10 @@ export default function Form(props: FormProps) {
                     />
                 </div>
 
-                <Button data={{ text: "Crear" }} />
+                <Button
+                    data={{ text: `${type === "create" ? "Crear" : "Modificar"}` }}
+                    events={{ handleClick: handleSubmit }}
+                />
             </form>
             <p className="text-center text-gray-500 text-xs">&copy;2020 Acme Corp. All rights reserved.</p>
         </div>

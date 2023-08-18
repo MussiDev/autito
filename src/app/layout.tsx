@@ -1,9 +1,9 @@
 import "./globals.css";
-import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import Footer from "@/src/components/Footer/Footer";
 import type { Metadata } from "next";
 import Navbar from "@/src/components/Navbar/Navbar";
+import { Poppins } from "next/font/google";
 import React from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 
@@ -14,10 +14,17 @@ export const metadata: Metadata = {
     description: "Web App about post images",
 };
 
+const poppins = Poppins({
+    weight: ["300", "500", "700"],
+    subsets: ["latin"],
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="es">
-            <body className="grid min-h-screen grid-rows-[60px,1fr,60px] gap-4 bg-main text-white">
+            <body
+                className={`grid min-h-screen grid-rows-[60px,1fr,60px] gap-4 bg-main text-white ${poppins.className}`}
+            >
                 <Navbar />
                 <main className="m-auto">{children}</main>
                 <Footer />

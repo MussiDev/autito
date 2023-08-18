@@ -15,6 +15,7 @@ export default function Form(props: FormProps) {
     const { type, id } = props;
     const router = useRouter();
     const [newTravel, setNewTravel] = useState<Viaje>({
+        _id: "",
         destino: "",
         ubicacion: "",
         fecha: "",
@@ -45,7 +46,6 @@ export default function Form(props: FormProps) {
                           },
                           body: JSON.stringify(newTravel),
                       });
-            console.log(response);
             if (response.ok) {
                 router.push("/");
                 router.refresh();

@@ -1,3 +1,6 @@
+import "./globals.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
 import Footer from "@/src/components/Footer/Footer";
 import type { Metadata } from "next";
 import Navbar from "@/src/components/Navbar/Navbar";
@@ -19,10 +22,8 @@ const poppins = Poppins({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="es">
-            <body
-                className={`grid min-h-screen grid-rows-[60px,1fr,60px] gap-4 bg-main text-white ${poppins.className}`}
-            >
+        <html lang="es" className={`${poppins.className}`}>
+            <body className="grid min-h-screen grid-rows-[60px,1fr,60px] gap-4 bg-main text-white ">
                 <Navbar />
                 <main className="m-auto">{children}</main>
                 <Footer />

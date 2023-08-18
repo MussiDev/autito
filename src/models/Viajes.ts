@@ -1,34 +1,39 @@
-import { Schema, model, models } from "mongoose";
+import mongoose from "mongoose";
 
-const ViajeSchema = new Schema(
+const ViajeSchema = new mongoose.Schema(
     {
-    destino: {
-        type: String,
-        required: true,
+        _id: {
+            type: Object,
+            required: true,
+        },
+        destino: {
+            type: String,
+            required: true,
+        },
+        ubicacion: {
+            type: String,
+            required: true,
+        },
+        fecha: {
+            type: Date,
+            required: true,
+        },
+        hora: {
+            type: String,
+            required: true,
+        },
+        lugares: {
+            type: Number,
+            required: true,
+        },
+        descripcion: {
+            type: String,
+            required: false,
+        },
     },
-    ubicacion: {
-        type: String,
-        required: true,
-    },
-    fecha: {
-        type: String,
-        required: true
-    },
-    hora: {
-        type: String,
-        required: true
-    },
-    lugares: {
-        type: Number,
-        required: true
-    },
-    descripcion: {
-        type: String,
-        required: false
+    {
+        timestamps: true,
     }
-    },{
-        timestamps: true
-    }
-)
+);
 
-export const Viajes = models.Viaje || model('Viaje', ViajeSchema);
+export const Viajes = mongoose.models.Viaje || mongoose.model("Viaje", ViajeSchema);

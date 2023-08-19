@@ -1,5 +1,7 @@
 "use client";
 
+import { useParams, useRouter } from "next/navigation";
+
 import Button from "@/src/common/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -7,20 +9,19 @@ import Link from "next/link";
 import React from "react";
 import { Viaje } from "@/entities/Travels/Viaje";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/navigation";
 
 interface TravelCardProps {
     travel: Viaje;
-    id: string;
 }
 
 export default function TravelCard(props: TravelCardProps) {
-    const { travel, id } = props;
+    const { travel } = props;
+    const params = useParams();
     const router = useRouter();
 
     const handleDelete = async () => {
         try {
-            const response = await fetch(`api/viajes?id=${id}`, {
+            const response = await fetch(`api/viajes/${travel._id}`, {
                 method: "DELETE",
             });
             if (response.ok) {
@@ -68,7 +69,7 @@ export default function TravelCard(props: TravelCardProps) {
             <div className="flex flex-row justify-evenly w-full">
                 <Button data={{ text: "Reservar Asiento", className: "bg-secondary" }} />
                 <Button data={{ text: "Borrar" }} events={{ handleClick: handleDelete }} />
-                <Link href={`/Viajes/EditarViaje/${id}`} legacyBehavior>
+                <Link href={`/Viajes/EditarViaje/${travel._id}`} legacyBehavior>
                     Editar
                 </Link>
             </div>

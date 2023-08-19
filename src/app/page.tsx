@@ -5,25 +5,18 @@ import { connectDB } from "../utils/mongoose";
 
 async function loadTravels() {
     await connectDB();
-    const travels: Viaje[] = await Viajes.find();
+    const travels: Viaje[] = await Viajes.find().lean();
     if (!travels) {
         throw new Error("Failed to fetch travel");
     }
-    return travels;
+    return travels.map((travel) => ({
+        ...travel,
+        _id: travel._id?.toString(),
+    }));
 }
 
 export default async function Home() {
     const travels: Viaje[] = await loadTravels();
-    const plainTravels = travels.map((travel: Viaje) => {
-        return {
-            _id: travel._id,
-            destino: travel.destino,
-            ubicacion: travel.ubicacion,
-            fecha: travel.fecha,
-            hora: travel.hora,
-            lugares: travel.lugares,
-            descripcion: travel.descripcion,
-        };
-    });
-    return <>{travels?.length > 0 ? <Travels travels={plainTravels} /> : <div>No hay viajes disponibles.</div>}</>;
+
+    return <>{travels?.length > 0 ? <Travels travels={travels} /> : <div>No hay viajes disponibles.</div>}</>;
 }

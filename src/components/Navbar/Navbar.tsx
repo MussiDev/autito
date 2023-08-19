@@ -22,7 +22,7 @@ export default function Navbar() {
                 <Button
                     data={{
                         text: "Crear Viaje",
-                        href: "/Viajes/NuevoViaje",
+                        href: "/travels/newTravel",
                         icon: faPlus,
                     }}
                 />
@@ -30,7 +30,7 @@ export default function Navbar() {
                 <Button
                     data={{
                         text: "Crear Viaje",
-                        href: "/Viajes/NuevoViaje",
+                        href: "/travels/newTravel",
                         icon: faPlus,
                         className: "fixed bottom-12 right-6 z-20",
                     }}

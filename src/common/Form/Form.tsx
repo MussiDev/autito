@@ -15,20 +15,17 @@ export default function Form(props: FormProps) {
     const { type, id } = props;
     const router = useRouter();
     const [newTravel, setNewTravel] = useState<Viaje>({
-        _id: "",
         destino: "",
         ubicacion: "",
-        fecha: "",
+        fecha: new Date(),
         hora: "",
         lugares: 4,
         descripcion: "",
     });
-
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        const { destino, ubicacion, fecha, hora, lugares, descripcion } = newTravel;
+        const { destino, ubicacion, fecha, hora, lugares } = newTravel;
         if (!destino || !ubicacion || !fecha || !hora || !lugares) return;
-
         try {
             const response =
                 type === "create"
@@ -104,7 +101,11 @@ export default function Form(props: FormProps) {
                         type="Date"
                         placeholder="Fecha"
                         onChange={handleChange}
-                        value={newTravel.fecha}
+                        value={
+                            newTravel.fecha instanceof Date
+                                ? newTravel.fecha.toISOString().substring(0, 10)
+                                : newTravel.fecha
+                        }
                     />
                 </div>
                 <div className="mb-4">

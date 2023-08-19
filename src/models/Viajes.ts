@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 
 const ViajeSchema = new mongoose.Schema(
     {
-        _id: {
-            type: Object,
-            required: true,
-        },
         destino: {
             type: String,
             required: true,
@@ -29,10 +25,13 @@ const ViajeSchema = new mongoose.Schema(
         descripcion: {
             type: String,
             required: false,
+            trim: true,
+            maxlength: [200, "title cannot be grater than 200 characters"],
         },
     },
     {
         timestamps: true,
+        ersionKey: false,
     }
 );
 

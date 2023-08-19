@@ -6,7 +6,6 @@ import { connectDB } from "@/src/utils/mongoose";
 export const GET = async () => {
     await connectDB();
     const viajes = await Viajes.find();
-    console.log(NextResponse.json(viajes));
     return NextResponse.json(viajes);
 };
 

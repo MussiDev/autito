@@ -30,7 +30,6 @@ export const GET = async (request: NextRequest, { params }: { params: RouteParam
 export const PUT = async (request: NextRequest, { params }: { params: RouteParams }) => {
     const body = await request.json();
     connectDB();
-
     try {
         const taskUpdated = await Viajes.findByIdAndUpdate(params.id, body, {
             new: true,
@@ -56,7 +55,6 @@ export const PUT = async (request: NextRequest, { params }: { params: RouteParam
 
 export const DELETE = async (request: NextRequest, { params }: { params: RouteParams }) => {
     connectDB();
-
     try {
         const travelDeleted = await Viajes.findByIdAndDelete(params.id);
 

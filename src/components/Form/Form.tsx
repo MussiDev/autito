@@ -1,21 +1,14 @@
 "use client";
 
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 
-import Button from "../Button/Button";
+import Button from "../../common/Button/Button";
 import { Travel } from "@/entities/Travels/Travel";
-import { useRouter } from "next/navigation";
 
-interface FormProps {
-    type: string;
-    id?: string;
-}
-
-export default function Form(props: FormProps) {
-    const { type, id } = props;
-
+export default function Form() {
     const router = useRouter();
-
+    const params = useParams();
     const [newTravel, setNewTravel] = useState<Travel>({
         destiny: "",
         ubication: "",
@@ -24,6 +17,19 @@ export default function Form(props: FormProps) {
         places: 4,
         description: "",
     });
+    const getTravel = async () => {
+        const res = await fetch(`/api/travels/${params.id}`);
+        const data: Travel = await res.json();
+        setNewTravel({
+            destiny: data.destiny,
+            ubication: data.ubication,
+            date: data.date,
+            hour: data.hour,
+            places: data.places,
+            description: data.description,
+        });
+    };
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         const { destiny, ubication, date, hour, places } = newTravel;
@@ -31,22 +37,21 @@ export default function Form(props: FormProps) {
         if (!destiny || !ubication || !date || !hour || !places) return;
 
         try {
-            const response =
-                type === "create"
-                    ? await fetch("/api/travels", {
-                          method: "POST",
-                          body: JSON.stringify(newTravel),
-                          headers: {
-                              "Content-Type": "application/json",
-                          },
-                      })
-                    : await fetch(`/api/travels/${id}`, {
-                          method: "PUT",
-                          headers: {
-                              "Content-type": "application/json",
-                          },
-                          body: JSON.stringify(newTravel),
-                      });
+            const response = params.id
+                ? await fetch("/api/travels", {
+                      method: "POST",
+                      headers: {
+                          "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(newTravel),
+                  })
+                : await fetch(`/api/travels/${params.id}`, {
+                      method: "PUT",
+                      headers: {
+                          "Content-type": "application/json",
+                      },
+                      body: JSON.stringify(newTravel),
+                  });
             if (response.ok) {
                 router.push("/");
                 router.refresh();
@@ -57,11 +62,14 @@ export default function Form(props: FormProps) {
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTravel((prevTravel) => ({
-            ...prevTravel,
-            [e.target.name]: e.target.value,
-        }));
+        setNewTravel({ ...newTravel, [e.target.name]: e.target.value });
     };
+
+    useEffect(() => {
+        if (params.id) {
+            getTravel();
+        }
+    }, []);
 
     return (
         <div className="w-full max-w-xs">
@@ -156,7 +164,7 @@ export default function Form(props: FormProps) {
                 </div>
 
                 <Button
-                    data={{ text: `${type === "create" ? "Crear" : "Modificar"}` }}
+                    data={{ text: `${!params.id ? "Crear" : "Modificar"}` }}
                     events={{ handleClick: handleSubmit }}
                 />
             </form>

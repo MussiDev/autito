@@ -67,7 +67,7 @@ export default function TravelCard(props: TravelCardProps) {
             <div className="flex flex-row justify-evenly w-full">
                 <Button data={{ text: "Reservar Asiento", className: "bg-secondary" }} />
                 <Button data={{ text: "Borrar" }} events={{ handleClick: handleDelete }} />
-                <Link href={`/travels/editTravel/${travel._id}`} passHref>
+                <Link href={`/travels/${travel._id}`} passHref>
                     Editar
                 </Link>
             </div>

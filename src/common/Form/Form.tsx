@@ -3,7 +3,7 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
 import Button from "../Button/Button";
-import { Viaje } from "../../../entities/Travels/Viaje";
+import { Travel } from "@/entities/Travels/Travel";
 import { useRouter } from "next/navigation";
 
 interface FormProps {
@@ -13,30 +13,34 @@ interface FormProps {
 
 export default function Form(props: FormProps) {
     const { type, id } = props;
+
     const router = useRouter();
-    const [newTravel, setNewTravel] = useState<Viaje>({
-        destino: "",
-        ubicacion: "",
-        fecha: new Date(),
-        hora: "",
-        lugares: 4,
-        descripcion: "",
+
+    const [newTravel, setNewTravel] = useState<Travel>({
+        destiny: "",
+        ubication: "",
+        date: new Date(),
+        hour: "",
+        places: 4,
+        description: "",
     });
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        const { destino, ubicacion, fecha, hora, lugares } = newTravel;
-        if (!destino || !ubicacion || !fecha || !hora || !lugares) return;
+        const { destiny, ubication, date, hour, places } = newTravel;
+
+        if (!destiny || !ubication || !date || !hour || !places) return;
+
         try {
             const response =
                 type === "create"
-                    ? await fetch("/api/viajes", {
+                    ? await fetch("/api/travels", {
                           method: "POST",
                           body: JSON.stringify(newTravel),
                           headers: {
                               "Content-Type": "application/json",
                           },
                       })
-                    : await fetch(`/api/viajes/${id}`, {
+                    : await fetch(`/api/travels/${id}`, {
                           method: "PUT",
                           headers: {
                               "Content-type": "application/json",
@@ -68,12 +72,12 @@ export default function Form(props: FormProps) {
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="destino"
-                        name="destino"
+                        id="destiny"
+                        name="destiny"
                         type="text"
                         placeholder="Destino"
                         onChange={handleChange}
-                        value={newTravel.destino}
+                        value={newTravel.destiny}
                     />
                 </div>
                 <div className="mb-4">
@@ -82,12 +86,12 @@ export default function Form(props: FormProps) {
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="ubicación"
-                        name="ubicacion"
+                        id="ubication"
+                        name="ubication"
                         type="text"
                         placeholder="Ubicación"
                         onChange={handleChange}
-                        value={newTravel.ubicacion}
+                        value={newTravel.ubication}
                     />
                 </div>
                 <div className="mb-4">
@@ -96,15 +100,15 @@ export default function Form(props: FormProps) {
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="fecha"
-                        name="fecha"
+                        id="date"
+                        name="date"
                         type="Date"
                         placeholder="Fecha"
                         onChange={handleChange}
                         value={
-                            newTravel.fecha instanceof Date
-                                ? newTravel.fecha.toISOString().substring(0, 10)
-                                : newTravel.fecha
+                            newTravel.date instanceof Date
+                                ? newTravel.date.toISOString().substring(0, 10)
+                                : newTravel.date
                         }
                     />
                 </div>
@@ -114,12 +118,12 @@ export default function Form(props: FormProps) {
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="hora"
-                        name="hora"
+                        id="hour"
+                        name="hour"
                         type="Time"
                         placeholder="Hora"
                         onChange={handleChange}
-                        value={newTravel.hora}
+                        value={newTravel.hour}
                     />
                 </div>
                 <div className="mb-4">
@@ -128,12 +132,12 @@ export default function Form(props: FormProps) {
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="lugares"
-                        name="lugares"
+                        id="places"
+                        name="places"
                         type="text"
                         placeholder="Lugares"
                         onChange={handleChange}
-                        value={newTravel.lugares}
+                        value={newTravel.places}
                     />
                 </div>
                 <div className="mb-4">
@@ -142,12 +146,12 @@ export default function Form(props: FormProps) {
                     </label>
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="descripcion"
-                        name="descripcion"
+                        id="description"
+                        name="description"
                         type="text"
                         placeholder="Descripción"
                         onChange={handleChange}
-                        value={newTravel.descripcion}
+                        value={newTravel.description}
                     />
                 </div>
 

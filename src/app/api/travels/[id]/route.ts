@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { RouteParams } from "@/entities/RouteParams";
-import { Viajes } from "@/src/models/Viajes";
+import { TravelsModel } from "@/src/models/Travels";
 import { connectDB } from "@/src/utils/mongoose";
 
 export const GET = async (request: NextRequest, { params }: { params: RouteParams }) => {
-    connectDB();
+    const { id } = params;
+    await connectDB();
     try {
-        const travelFound = await Viajes.findById(params.id);
+        const travelFound = await TravelsModel.findOne({ _id: id });
 
         if (!travelFound)
             return NextResponse.json(
@@ -19,7 +20,7 @@ export const GET = async (request: NextRequest, { params }: { params: RouteParam
                 }
             );
 
-        return NextResponse.json(travelFound);
+        return NextResponse.json({ travelFound });
     } catch (error: any) {
         return NextResponse.json(error.message, {
             status: 400,
@@ -28,12 +29,11 @@ export const GET = async (request: NextRequest, { params }: { params: RouteParam
 };
 
 export const PUT = async (request: NextRequest, { params }: { params: RouteParams }) => {
+    const { id } = params;
     const body = await request.json();
-    connectDB();
+    await connectDB();
     try {
-        const taskUpdated = await Viajes.findByIdAndUpdate(params.id, body, {
-            new: true,
-        });
+        const taskUpdated = await TravelsModel.findByIdAndUpdate(id, body);
 
         if (!taskUpdated)
             return NextResponse.json(
@@ -45,30 +45,7 @@ export const PUT = async (request: NextRequest, { params }: { params: RouteParam
                 }
             );
 
-        return NextResponse.json(taskUpdated);
-    } catch (error: any) {
-        return NextResponse.json(error.message, {
-            status: 400,
-        });
-    }
-};
-
-export const DELETE = async (request: NextRequest, { params }: { params: RouteParams }) => {
-    connectDB();
-    try {
-        const travelDeleted = await Viajes.findByIdAndDelete(params.id);
-
-        if (!travelDeleted)
-            return NextResponse.json(
-                {
-                    message: "Travel not found",
-                },
-                {
-                    status: 404,
-                }
-            );
-
-        return NextResponse.json(travelDeleted);
+        return NextResponse.json({ message: "Travel edited" });
     } catch (error: any) {
         return NextResponse.json(error.message, {
             status: 400,

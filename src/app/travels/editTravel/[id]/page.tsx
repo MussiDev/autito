@@ -3,7 +3,7 @@ import { RouteParams } from "@/entities/RouteParams";
 
 const getTravelById = async (id: string) => {
     try {
-        const res = await fetch(`/api/viajes/${id}`, {
+        const res = await fetch(`/api/travels/${id}`, {
             cache: "no-store",
         });
 

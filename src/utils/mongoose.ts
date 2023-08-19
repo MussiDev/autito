@@ -1,19 +1,22 @@
-import { connect } from "mongoose";
+import mongoose from "mongoose";
 
-const connected = {
-    isConnected: false,
-};
+let isConnected = false;
 
 export const connectDB = async () => {
-    if (connected.isConnected) return;
+    mongoose.set("strictQuery", true);
+
+    if (!process.env.MONGODB_URL) return console.log("Missing MongoDB URL");
+
+    if (isConnected) {
+        console.log("MongoDB connection already established");
+        return;
+    }
+
     try {
-        if (!process.env.DB_URL) {
-            throw new Error("DB_URL not defined in environment variables");
-        }
-        await connect(process.env.DB_URL);
-        connected.isConnected = true;
+        await mongoose.connect(process.env.MONGODB_URL);
+        isConnected = true;
+        console.log("MongoDB connected");
     } catch (error) {
-        console.error("Error connecting to the database:", error);
-        throw error;
+        console.log(error);
     }
 };

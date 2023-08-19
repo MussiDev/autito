@@ -1,28 +1,28 @@
 import mongoose from "mongoose";
 
-const ViajeSchema = new mongoose.Schema(
+const TravelSchema = new mongoose.Schema(
     {
-        destino: {
+        destiny: {
             type: String,
             required: true,
         },
-        ubicacion: {
+        ubication: {
             type: String,
             required: true,
         },
-        fecha: {
+        date: {
             type: Date,
             required: true,
         },
-        hora: {
+        hour: {
             type: String,
             required: true,
         },
-        lugares: {
+        places: {
             type: Number,
             required: true,
         },
-        descripcion: {
+        description: {
             type: String,
             required: false,
             trim: true,
@@ -31,8 +31,8 @@ const ViajeSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-        ersionKey: false,
+        versionKey: false,
     }
 );
 
-export const Viajes = mongoose.models.Viaje || mongoose.model("Viaje", ViajeSchema);
+export const TravelsModel = mongoose.models.Travel || mongoose.model("Travel", TravelSchema);

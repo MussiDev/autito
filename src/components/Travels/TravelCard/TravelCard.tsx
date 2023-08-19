@@ -21,7 +21,7 @@ export default function TravelCard(props: TravelCardProps) {
 
     const handleDelete = async () => {
         try {
-            const response = await fetch(`api/viajes/${travel._id}`, {
+            const response = await fetch(`api/viajes/${travel.id}`, {
                 method: "DELETE",
             });
             if (response.ok) {
@@ -37,7 +37,7 @@ export default function TravelCard(props: TravelCardProps) {
     const starsOfUser = [1, 2, 3, 4, 5];
     return (
         <section className="border-2 border-secondary p-4 flex flex-col justify-between max-w-max mt-2 gap-4 rounded-md text-white items-center h-80">
-            <Link href={`/Viajes/editTravel/${travel._id}`} passHref>
+            <Link href={`/Viajes/editTravel/${travel.id}`} passHref>
                 <h1 className="font-bold text-xl mb-2">
                     {travel.ubicacion} - {travel.destino}
                 </h1>
@@ -69,7 +69,7 @@ export default function TravelCard(props: TravelCardProps) {
             <div className="flex flex-row justify-evenly w-full">
                 <Button data={{ text: "Reservar Asiento", className: "bg-secondary" }} />
                 <Button data={{ text: "Borrar" }} events={{ handleClick: handleDelete }} />
-                <Link href={`/Viajes/EditarViaje/${travel._id}`} legacyBehavior>
+                <Link href={`/Viajes/EditarViaje/${travel.id}`} legacyBehavior>
                     Editar
                 </Link>
             </div>

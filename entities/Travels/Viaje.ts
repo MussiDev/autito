@@ -1,5 +1,5 @@
 export interface Viaje {
-    _id?: string | null;
+    id: string;
     destino: string;
     ubicacion: string;
     fecha: Date;

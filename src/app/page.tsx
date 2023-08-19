@@ -11,7 +11,7 @@ async function loadTravels() {
     }
     return travels.map((travel) => ({
         ...travel,
-        _id: travel._id?.toString(),
+        _id: travel.id?.toString(),
     }));
 }
 

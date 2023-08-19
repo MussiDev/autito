@@ -6,7 +6,7 @@ export default function Travels({ travels }: { travels: Viaje[] }) {
     return (
         <article className="grid lg:grid-cols-[repeat(3,_minmax(15rem,_1fr))] md:grid-cols-[repeat(2,_minmax(15rem,_1fr))] sm:grid-cols-1 m-auto max-w-screen-lg gap-2">
             {travels.map((travel: Viaje) => (
-                <TravelCard key={travel._id} travel={travel} />
+                <TravelCard key={travel.id} travel={travel} />
             ))}
         </article>
     );

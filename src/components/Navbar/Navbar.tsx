@@ -18,12 +18,21 @@ export default function Navbar() {
             <a className="text-2xl font-medium cursor-pointer" onClick={() => router.push("/")}>
                 Autito🚗
             </a>
-            {isNotMobile && (
+            {isNotMobile ? (
                 <Button
                     data={{
                         text: "Crear Viaje",
                         href: "/Viajes/NuevoViaje",
                         icon: faPlus,
+                    }}
+                />
+            ) : (
+                <Button
+                    data={{
+                        text: "Crear Viaje",
+                        href: "/Viajes/NuevoViaje",
+                        icon: faPlus,
+                        className: "fixed bottom-12 right-6 z-20",
                     }}
                 />
             )}

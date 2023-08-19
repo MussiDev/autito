@@ -9,6 +9,7 @@ import { Poppins } from "next/font/google";
 import React from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import useMediaQuery from "@/src/hooks/useMediaQuery";
 
 config.autoAddCss = false;
 
@@ -27,18 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="es" className={`${poppins.className}`}>
             <body className="grid min-h-screen grid-rows-[60px,1fr,60px] gap-4 bg-main text-white ">
                 <Navbar />
-                <main className="m-auto">
-                    {children}
-
-                    <Button
-                        data={{
-                            text: "Crear Viaje",
-                            href: "/Viajes/NuevoViaje",
-                            icon: faPlus,
-                            className: "fixed bottom-6 right-6 z-20",
-                        }}
-                    />
-                </main>
+                <main className="m-auto">{children}</main>
                 <Footer />
             </body>
         </html>

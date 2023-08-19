@@ -17,16 +17,26 @@ export default function Form() {
         places: 4,
         description: "",
     });
+    const [editTravel, setEditTravel] = useState<Travel>({
+        destiny: "",
+        ubication: "",
+        date: new Date(),
+        hour: "",
+        places: 4,
+        description: "",
+    });
+
     const getTravel = async () => {
         const res = await fetch(`/api/travels/${params.id}`);
-        const data: Travel = await res.json();
-        setNewTravel({
-            destiny: data.destiny,
-            ubication: data.ubication,
-            date: data.date,
-            hour: data.hour,
-            places: data.places,
-            description: data.description,
+        const data = await res.json();
+
+        setEditTravel({
+            destiny: data.travelFound.destiny,
+            ubication: data.travelFound.ubication,
+            date: new Date(data.travelFound.date),
+            hour: data.travelFound.hour,
+            places: data.travelFound.places,
+            description: data.travelFound.description,
         });
     };
 
@@ -50,7 +60,7 @@ export default function Form() {
                       headers: {
                           "Content-type": "application/json",
                       },
-                      body: JSON.stringify(newTravel),
+                      body: JSON.stringify(editTravel),
                   });
             if (response.ok) {
                 router.push("/");
@@ -62,6 +72,9 @@ export default function Form() {
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (params.id) {
+            setEditTravel({ ...editTravel, [e.target.name]: e.target.value });
+        }
         setNewTravel({ ...newTravel, [e.target.name]: e.target.value });
     };
 
@@ -85,7 +98,7 @@ export default function Form() {
                         type="text"
                         placeholder="Destino"
                         onChange={handleChange}
-                        value={newTravel.destiny}
+                        value={!params.id ? newTravel.destiny : editTravel?.destiny}
                     />
                 </div>
                 <div className="mb-4">
@@ -99,7 +112,7 @@ export default function Form() {
                         type="text"
                         placeholder="Ubicación"
                         onChange={handleChange}
-                        value={newTravel.ubication}
+                        value={!params.id ? newTravel.ubication : editTravel?.ubication}
                     />
                 </div>
                 <div className="mb-4">
@@ -114,9 +127,11 @@ export default function Form() {
                         placeholder="Fecha"
                         onChange={handleChange}
                         value={
-                            newTravel.date instanceof Date
+                            !params.id
                                 ? newTravel.date.toISOString().substring(0, 10)
-                                : newTravel.date
+                                : editTravel?.date instanceof Date
+                                ? editTravel.date.toISOString().substring(0, 10)
+                                : ""
                         }
                     />
                 </div>
@@ -131,7 +146,7 @@ export default function Form() {
                         type="Time"
                         placeholder="Hora"
                         onChange={handleChange}
-                        value={newTravel.hour}
+                        value={!params.id ? newTravel.hour : editTravel?.hour}
                     />
                 </div>
                 <div className="mb-4">
@@ -145,7 +160,7 @@ export default function Form() {
                         type="text"
                         placeholder="Lugares"
                         onChange={handleChange}
-                        value={newTravel.places}
+                        value={params.id ? newTravel.places : editTravel?.places}
                     />
                 </div>
                 <div className="mb-4">
@@ -159,7 +174,7 @@ export default function Form() {
                         type="text"
                         placeholder="Descripción"
                         onChange={handleChange}
-                        value={newTravel.description}
+                        value={!params.id ? newTravel.description : editTravel?.description}
                     />
                 </div>
 
@@ -168,7 +183,6 @@ export default function Form() {
                     events={{ handleClick: handleSubmit }}
                 />
             </form>
-            <p className="text-center text-gray-500 text-xs">&copy;2020 Acme Corp. All rights reserved.</p>
         </div>
     );
 }

@@ -4,26 +4,46 @@ import Link from "next/link";
 import React from "react";
 
 interface ButtonProps {
-	data: {
-		href?: string;
-		text: string;
-		icon?: IconProp;
-		className?: string
-	};
-	events?: {
-		handleClick: React.MouseEventHandler<HTMLButtonElement>;
-	};
+    data: {
+        href?: string;
+        text?: string;
+        icon?: IconProp;
+        className?: string;
+    };
+    events?: {
+        handleClick: React.MouseEventHandler<HTMLButtonElement>;
+    };
 }
 
 export default function Button(props: ButtonProps) {
-	const { href, text, icon, className } = props.data;
-	return (
-		<button
-			className={` ${className && className} p-2 rounded-md text-white font-medium bg-third flex gap-2 items-center justify-center' `}
-			onClick={props.events?.handleClick}
-			type='button'>
-			{icon && <FontAwesomeIcon icon={icon} />}
-			{href ? <Link href={href}>{text}</Link> : text}
-		</button>
-	);
+    const { href, text, icon, className } = props.data;
+    return (
+        <>
+            {href ? (
+                <Link href={href}>
+                    <button
+                        className={` ${
+                            className && className
+                        } p-2 rounded-md text-white font-medium bg-third flex gap-2 items-center justify-center'`}
+                        onClick={props.events?.handleClick}
+                        type="button"
+                    >
+                        {icon && <FontAwesomeIcon icon={icon} />}
+                        {text && text}
+                    </button>
+                </Link>
+            ) : (
+                <button
+                    className={` ${
+                        className && className
+                    } p-2 rounded-md text-white font-medium bg-third flex gap-2 items-center justify-center'`}
+                    onClick={props.events?.handleClick}
+                    type="button"
+                >
+                    {icon && <FontAwesomeIcon icon={icon} />}
+                    {text && text}
+                </button>
+            )}
+        </>
+    );
 }

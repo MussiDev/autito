@@ -7,16 +7,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import LinkElement from "@/src/common/LinkElement/LinkElement";
 import React from "react";
+import useMediaQuery from "@/src/hooks/useMediaQuery";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
     const router = useRouter();
+    const isNotMobile = useMediaQuery("(min-width:426px)");
     return (
         <header className="m-auto w-full max-w-screen-lg p-4 flex justify-between items-center">
             <a className="text-2xl font-medium cursor-pointer" onClick={() => router.push("/")}>
                 Autito🚗
             </a>
-            <Button data={{ text: "Crear Viaje", href: "/Viajes/NuevoViaje", icon: faPlus }} />
+            {isNotMobile && (
+                <Button
+                    data={{
+                        text: "Crear Viaje",
+                        href: "/Viajes/NuevoViaje",
+                        icon: faPlus,
+                    }}
+                />
+            )}
             <div className="flex gap-4">
                 <LinkElement data={{ icon: faMessage, href: "" }} />
                 <LinkElement data={{ icon: faBell, href: "" }} />
@@ -29,7 +39,9 @@ export default function Navbar() {
                             loading="lazy"
                             className="rounded-full object-cover object-top"
                             quality={80}
-                            sizes="100vw"
+                            sizes="(min-width: 60em) 24vw,
+                                (min-width: 28em) 45vw,
+                                100vw"
                         />
                     </div>
                     <FontAwesomeIcon icon={faChevronDown} className="text-sm cursor-pointer" />

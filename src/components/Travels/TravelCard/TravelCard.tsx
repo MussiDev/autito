@@ -36,14 +36,12 @@ export default function TravelCard(props: TravelCardProps) {
     const starsOfUser = [1, 2, 3, 4, 5];
     return (
         <section className="border-2 border-secondary p-4 flex flex-col justify-between max-w-max mt-2 gap-4 rounded-md text-white items-center h-80">
-            <Link href={`/Viajes/${travel._id}`} passHref>
+            <Link href={`/Viajes/editTravel/${travel._id}`} passHref>
                 <h1 className="font-bold text-xl mb-2">
                     {travel.ubicacion} - {travel.destino}
                 </h1>
             </Link>
-            <p className="text-fourth">
-                {travel.fecha} {travel.hora}
-            </p>
+            <p className="text-fourth"></p>
             <p>
                 Lugares libres: <span className="text-secondary">{travel.lugares}</span>
             </p>
@@ -56,7 +54,9 @@ export default function TravelCard(props: TravelCardProps) {
                         loading="lazy"
                         className="rounded-full object-cover object-top"
                         quality={80}
-                        sizes="100vw"
+                        sizes="(min-width: 60em) 24vw,
+                                (min-width: 28em) 45vw,
+                                100vw"
                     />
                 </div>
                 <p>Leo Messi</p>

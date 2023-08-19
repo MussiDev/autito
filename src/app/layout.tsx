@@ -1,12 +1,14 @@
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
+import Button from "../common/Button/Button";
 import Footer from "@/src/components/Footer/Footer";
 import type { Metadata } from "next";
 import Navbar from "@/src/components/Navbar/Navbar";
 import { Poppins } from "next/font/google";
 import React from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 config.autoAddCss = false;
 
@@ -25,7 +27,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="es" className={`${poppins.className}`}>
             <body className="grid min-h-screen grid-rows-[60px,1fr,60px] gap-4 bg-main text-white ">
                 <Navbar />
-                <main className="m-auto">{children}</main>
+                <main className="m-auto">
+                    {children}
+
+                    <Button
+                        data={{
+                            text: "Crear Viaje",
+                            href: "/Viajes/NuevoViaje",
+                            icon: faPlus,
+                            className: "fixed bottom-6 right-6 z-20",
+                        }}
+                    />
+                </main>
                 <Footer />
             </body>
         </html>

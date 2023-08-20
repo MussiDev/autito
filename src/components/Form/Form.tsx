@@ -4,6 +4,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import Button from "../../common/Button/Button";
+import Dropdown from "@/src/common/Dropdown/Dropdown";
 import { Travel } from "@/entities/Travels/Travel";
 
 export default function Form() {
@@ -42,12 +43,12 @@ export default function Form() {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        const { destiny, ubication, date, hour, places } = newTravel;
+        const { destiny, ubication, date, hour, places } = !params.id ? newTravel : editTravel;
 
         if (!destiny || !ubication || !date || !hour || !places) return;
 
         try {
-            const response = params.id
+            const response = !params.id
                 ? await fetch("/api/travels", {
                       method: "POST",
                       headers: {
@@ -85,42 +86,26 @@ export default function Form() {
     }, []);
 
     return (
-        <div className="w-full max-w-xs">
-            <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 text-orange-500" onSubmit={handleSubmit}>
+        <div className="w-full max-w-sm">
+            <form className="bg-main-900 shadow-md rounded px-8 pt-6 pb-8 mb-4 text-orange-500" onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <label className="block text-sm font-bold mb-2" htmlFor="destino">
                         Destino
                     </label>
-                    <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="destiny"
-                        name="destiny"
-                        type="text"
-                        placeholder="Destino"
-                        onChange={handleChange}
-                        value={!params.id ? newTravel.destiny : editTravel?.destiny}
-                    />
+                    <Dropdown data={{ text: "Elija el destino" }} />
                 </div>
                 <div className="mb-4">
                     <label className="block text-sm font-bold mb-2" htmlFor="ubicación">
                         Ubicación
                     </label>
-                    <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="ubication"
-                        name="ubication"
-                        type="text"
-                        placeholder="Ubicación"
-                        onChange={handleChange}
-                        value={!params.id ? newTravel.ubication : editTravel?.ubication}
-                    />
+                    <Dropdown data={{ text: "Elija la ubicación" }} />
                 </div>
                 <div className="mb-4">
                     <label className="block text-sm font-bold mb-2" htmlFor="fecha">
                         Fecha
                     </label>
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        className="bg-main-900 text-white shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                         id="date"
                         name="date"
                         type="Date"
@@ -140,7 +125,7 @@ export default function Form() {
                         Hora
                     </label>
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        className="bg-main-900 text-white shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                         id="hour"
                         name="hour"
                         type="Time"
@@ -154,7 +139,7 @@ export default function Form() {
                         Lugares
                     </label>
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        className=" bg-main-900 text-white shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                         id="places"
                         name="places"
                         type="text"
@@ -168,7 +153,7 @@ export default function Form() {
                         Descripción
                     </label>
                     <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                        className=" bg-main-900 text-white shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                         id="description"
                         name="description"
                         type="text"

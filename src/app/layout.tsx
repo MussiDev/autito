@@ -26,7 +26,7 @@ const poppins = Poppins({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="es" className={`${poppins.className}`}>
-            <body className="grid min-h-screen grid-rows-[60px,1fr,60px] gap-4 bg-main text-white ">
+            <body className="grid min-h-screen grid-rows-[60px,1fr,60px] gap-4 bg-main-900 text-white ">
                 <Navbar />
                 <main className="m-auto">{children}</main>
                 <Footer />

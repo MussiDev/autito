@@ -1,5 +1,5 @@
 import { Travel } from "@/entities/Travels/Travel";
-import Travels from "@/src/components/Travels/TravelCard/Travels";
+import Travels from "@/src/components/Travels/Travels";
 import { TravelsModel } from "@/src/models/Travels";
 import { connectDB } from "../utils/mongoose";
 

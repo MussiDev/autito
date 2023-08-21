@@ -27,6 +27,8 @@ export default function Form() {
     const [selectDestiny, setSelectDestiny] = useState<string | null>(null);
     const [selectUbication, setSelectUbication] = useState<string | null>(null);
 
+    const [search, setSearch] = useState<string>("");
+
     useEffect(() => {
         if (id) {
             getTravel();
@@ -52,6 +54,10 @@ export default function Form() {
             setEditTravel({ ...editTravel, [e.target.name]: e.target.value });
         }
         setNewTravel({ ...newTravel, [e.target.name]: e.target.value });
+    };
+
+    const handleChangePlaces = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
     };
 
     const handleSubmit = async (e: FormEvent) => {
@@ -89,6 +95,31 @@ export default function Form() {
         }
     };
 
+    const getPlaces = async () => {
+        try {
+            const res = await fetch(
+                `http://dataservice.accuweather.com/locations/v1/cities/AR/search?apikey=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${search}`,
+                {
+                    mode: "cors",
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                }
+            );
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data);
+            } else {
+                console.error("Error fetching places:", res.statusText);
+            }
+        } catch (error) {
+            console.error("Error fetching places:", error);
+        }
+    };
+    useEffect(() => {
+        getPlaces();
+    }, [search]);
+
     const inputFields = [
         { label: "Destino", name: "destiny", type: "text" },
         { label: "Ubicación", name: "ubication", type: "text" },
@@ -110,8 +141,14 @@ export default function Form() {
                             type={field.type}
                             id={field.name}
                             name={field.name}
-                            onChange={handleChange}
-                            value={!id ? newTravel[field.name as FieldName] : editTravel?.[field.name as FieldName]}
+                            onChange={field.name === "destiny" ? handleChangePlaces : handleChange}
+                            value={
+                                field.name === "places" && search !== null
+                                    ? search
+                                    : !id
+                                    ? newTravel[field.name as FieldName]
+                                    : editTravel?.[field.name as FieldName]
+                            }
                             className="bg-main-900 text-white shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                         />
                     </div>

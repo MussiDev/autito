@@ -22,3 +22,25 @@ body {
             transparent,
             rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: rgb(0 9 16 / 1);
+    border-radius: 1rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #F9732A;
+    border-radius: 1rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #0A1128;
+}
